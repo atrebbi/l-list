@@ -1,0 +1,15 @@
+{$I Ovr.Def}
+
+{$I+}
+{$V-}
+{$S+}
+{$D-}
+{$L-}
+{$R-}
+{$X+}
+{$X-}                       {Turn off extended syntax}
+
+{$IFDEF OVR}
+   {$O+}
+   {$F+}
+{$ENDIF}

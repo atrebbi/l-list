@@ -1,0 +1,481 @@
+
+                          Whatsnew 1.04
+
+* Added an OS/2 version of LLIST ; this is named LLISTP.EXE ; note 
+that this is a preliminary release,  use at  your own  risk ;  the 
+LLISTP.EXE can be unpacked using password "ole", that is with  the 
+command "Pkunzip -sole LL104b2 llistp.exe";
+
+* Raid command %RESCAN  now sends  only new  files (age  less than 
+NewDays); new metacommand %DAYS  can let  your uplink  change this 
+value when adding areas with rescan option active;
+
+*   Added  commands  %ANNOUNCE  and  %-ANNOUNCE  to internal  raid 
+processor; these will allow  each node  to receive  a netmail  msg 
+with announce of new files in linked tic areas;
+
+* Added  commands %TINYSEENBY  and %-TINYSEENBY  to internal  raid 
+processor; these will allow each node to strip seen-by lines  from 
+received .Tic, limiting them to sender and receiver node;
+
+* Added support for multiple inbound dirs (note: using LORA,  prot 
+known and unknown inbound dirs will be scanned for .Tic files);
+
+*   Improved  support for  kludge ^AFDN;  if you  select Fdn  in a 
+AnnounceMsg,  L-List  will scan  file areas  which belong  to file 
+group with the same tag as Fdn; this can help  you to  make easily 
+separate AnnounceMsg for each Fdn;
+
+* Added support for multiple outbound  dirs; they  can be  defined 
+both in LList.Cfg and in Tic.Cfg, as:
+ZONE <Zone> <Dir>
+Normally L-List uses outbound  dir defined  with OUTBOUND  (or the 
+first zone found in Tic.Cfg), with the number of the  zone in  the 
+extension if it is  different from  the main  address; but  if the 
+zone of the node is defined in a ZONE statement,  L-List will  use 
+that outbound dir (note: you will need zone statements only if you 
+are using binkley with domains);
+
+* Detection of files in index (Lfiles.Idx), does not consider area 
+number; that is, a file already present in  another area  will not 
+be  announced;  this will  prevent possible  errors occuring  when 
+areas are renumbered but index is not updated;
+
+* New desc lines will be appended at the beginning of files.bbs if 
+FixFBbsSort is set to SortDate;
+
+* An optional number (0..100) can now be  specified after  keyword 
+RepackOptimize; L-List will check  that the  size of  the repacked 
+file is less than the old size of this parameter (example, if  you 
+set "RepackOptimize 10" and old size is 30k,  L-List will  fail if 
+size of the recompressed file is 29k or 28k, and  will accept  the 
+new format only if its size is 27k or less, with a gain or  10% or 
+more);
+
+*   Added  keyword "NoFirstLine",  that will  force L-List  to not 
+preserve  first  line  of  old description  when a  File_Id.Diz is 
+imported;
+
+* Utility Scan_Cd.Exe is no longer included in the package; L-List 
+bcan now run without SysFile.Dat and SysFile.Idx, reading a 
+standard Tic.Cfg;
+
+* Added support for Tic groups; a group  is defined  in LLTic.Cfg, 
+as (example):
+
+TicGroup SDN
+  Address 2:332/901
+  Level 1
+  GroupId 1-
+  Node 2:332/903
+  Node 2:332/904
+End
+
+if a new area is created whose tag begins with  GroupId, its  path 
+will  be  created  in  <PathNewAreas><GroupTag><AreaTag>,  several 
+parameters will be read from the group, and  nodes defined  in the 
+group will be automatically linked (note that old flag AutoLink is 
+no longer supported); linking to file groups can be managed  using 
+L-List internal RAID processor (commands %AUTOLINK <Group> and  %- 
+AUTOLINK  <group>;  a list  of available  file groups  can be  got 
+sending cammands %AUTOLINK or %-AUTOLINK with no group specified); 
+a "!" as 1st char in the group means that area belongs to no group 
+(note: TicGroups are not automatically created);
+
+* Fixed a bug with update file (command <Alt-E>);
+
+* Now L-List adds magic names to file desc in announces;
+
+*  Added support for  tic area  descriptions, read  by a  standard 
+Raid.Cfg if  this  is  found  in  L-List  dir  (note:  create your 
+Raid.Cfg merging FileBone.Na, FileBone.No and your local areas);
+
+* Tic.Cfg now MUST be copied in L-List dir (keyword  TicCfg is  no 
+longer supported);
+
+* Stripped TinySeenBy keyword;
+
+* Added  support for  secondary tic  Areas; their  tag is  defined 
+after the tag of a standard tic area and is the tag  of a  primary 
+file area too; for example:
+
+Area D:\AREA1\ PRIMARY SECONDARY
+    2:332/999 PW1
+    2:332/998 PW2
+
+Area D:\AREA2\ SECONDARY
+    2:332/997 PW3
+    2:332/999 PW1
+
+when a file is hatched in Area PRIMARY, it will be echoed to nodes 
+998 and 999, and then the file will be hatched  in area  SECONDARY 
+and sent  to 997  (999 will  not receive  it again  as it  will be 
+already in Seenby); if  a file  is hatched  in area  SECONDARY, it 
+will be sent normally to 997 and to 999;
+
+* Added  support for  kludges ^AREPLYTO  and ^AREPLYADDR,  used to 
+send a netmail msg via internet gate;
+
+* File names can now be  directly edited;  this will  result in  a 
+file rename;
+
+* Fixed bug with TIC processor managing "Magic" lines;
+
+*  Added support for several more keywords in  .Tic (Date,  Size), 
+and for keywords with a ":" at the end (that is, "Area:", "File:", 
+etc);  L-List  now  ignores  additional  info  in known  tic lines 
+without failing, according to Fsc-0028.Txt (unknown lines continue 
+to be reported "as  is"); however  L-List always  saves .Tic  in a 
+mostly compatible way; 
+
+* L-List now checks size of a file if a line "Size{:}" is found in 
+the  .Tic  file;  this  check  can  be  overridden  using  keyword 
+"FixSizeTic" in LList.Cfg;
+
+* L-List  now uses  ^APID: line  in msg  instead of  tear line  to 
+report info about product type;
+
+
+                          Wahtsnew 1.03
+
+*  L-List  now uses  environment variable  TEMP for  its temporary 
+directory (a dir %TEMP%LLTEMP.<n>,  where <n>  should be  a unique 
+name for that task); this is used to uncompress files, using a ram 
+disk should speed up L-List;
+
+* Added  two keywords,  BADFILES and  INFECTEDFILES, that  are the 
+download  directories  of two  reserved file  areas (visible  from 
+files.bbs editor); L-List moves files that  can't be  uncompressed 
+in BADFILES,  and files  that seem  to be  infected by  viruses in 
+INFECTEDFILES; check can be made in Files.Bbs editor  using Alt-Z, 
+or can  be made  automatically via  FixFBbs option  using ",Check" 
+(that is, "LList FixFBbs,Check"); note that  now, if  you performe 
+multiple   opreations   at   one   time   (for   example,   "LList 
+FixFBbs,Check,Repack,ReadFile_Id"), L-List optimizes execution  of 
+external shells (file will be uncompressed only once);
+
+* L-List recompress option (Alt-R) now compress file  as it  is if 
+its compression type is unknown (for example,  files that  are not 
+already compressed);
+
+* Repack tic option now works  separately in  each tic  file area, 
+using local keyword Repack  (this will  allow you  to repack  only 
+files of certain area, for example UPLOAD);
+
+* Fixed a bug with Tag New Files (Alt-N);
+
+* Now function search in Files.Bbs editor (Alt-W)  tag files  that 
+match string (the format is the same used by file-finder,  you can 
+search for  paths, keywords,  using logic  operators AND,  OR e  ~ 
+(NOT)); if no file is found in the current file area, L-List  will 
+prompt to go on  searching in  other areas  (this time  files that 
+match the selected keywords will be shown on  the screen,  and you 
+will be prompted to immediately switch to that area tagging  found 
+files);
+
+* Added support for negative search strings (written  as a  normal 
+string but preceeded by a "~"); for example,
+llist search:~*.RAR_AND_~*.ZIP
+will find files whose  extension is  different from  ZIP and  from 
+RAR;
+
+* New  option Alt-B  in Files.Bbs  editor; this  will scan  L-List 
+internal database (LList.Db, built by file-finder in search  areas 
+flagged with "BuildDb" getting info from announced files) and will 
+get a description for current file;
+
+* Fixed a bug with negative values of INDENT that were ignored;
+
+* Packer Pack and Unpack commands now accept two parameters; %1 is 
+the  name  of  the  compressed  file,  %2  is  the  name   of  the 
+uncompressed file; if you do not specify these  parameters, L-List 
+will add them at the end of the command line (for example, a "Pack 
+PkZip" will become "Pack PkZip %1  %2"); the  name of  the current 
+file in external shells can be omitted, in  this case  L-List will 
+add it at the end of the command line (that is, "AltF1 Shez %1" is 
+the same as "AltF1 Shez");
+
+* Stripped support for index file in maximus format;
+
+*  Hatch  option now  asks for  the name  of the  file to  replace 
+(default, the same name  of the  current file)  and for  the magic 
+name to use;
+
+* Added  option to  pack .TIC  (keyword Packer  in TicNodes  cfg); 
+using this keyword, L-List  will pack  all .Tic  directed to  that 
+node in a only file, whose extension will be the  first letter  of 
+the packer followed by "IC" (for example, using ARJ the compressed 
+file will have extension  AIC); in  addition, L-List  unpacks file 
+with extension *.?IC different from *.TIC, looking for  compressed 
+Tic files;
+
+* TIC Cfg file now is named LLTic.Cfg; this file  is automatically 
+included, and should contain  both TicAreas  (as contained  in old 
+file "TicAreas", but without info about echo nodes,  that will  be 
+read from a standard  Tic.Cfg defined  with "TicCfg"  keyword) and 
+TicNodes;
+
+* L-List TIC processor now updates  Magic names  according to  Tic 
+line "Magic"; a file "Magic.Cfg" in L-List directory will be  used 
+(this  will  contain  all  magic  names,  while  old  magic  names 
+preceeded by keyword "Magic" in LList.Cfg  will not  be used);  in 
+Magic.Cfg, you must not use keyword "Magic", as each line  that is 
+not empty will be considered as a magic;
+
+* L-List now uses flag files (*.Bsy) in its directory in order  to 
+safely access to files; take care to delete *.Bsy if L-List hungs- 
+up;
+
+* L-List does no longer import areas directly  into SysFile.Dat  / 
+SysFile.Idx if any area  is added  by Tic  processor; however,  it 
+updates data in Tic.Cfg, so that you can easily import new areas;
+
+*  Default  AreaIdAns for  Search is  NetAreaId (that  is, if  you 
+don't specify any area where to post results  for remote  searchs, 
+L-List will send them via NetMail); in addition,  NetMail area  is 
+automatically scanned (you won't' need to define it in *.Cfg);
+
+* L-List does no longer add a line with path to FileIdx in OkFile; 
+you must use a line "OkLine" to add it (look at LList.Cfg);
+
+*   You  can select  an alternative  summary report,  with keyword 
+"LongSummary";
+
+*  You can define keyword "Comment" in packer cfg; if present,  L- 
+List will add a comment to  current file  using this  command when 
+repacking it;
+
+*  L-List  now creates  always BDL  (default, 10  files); you  can 
+disable it using command line option "BDL 0";
+
+*   Local  Msg  from  <SysopName>  to  RAID are  always processed, 
+allowing  sysop  to  make  maintenance  by  Msg;  if   you  define 
+<LocalRaidPwd> in LList.Cfg, the subject of the msg  will have  to 
+match this keyword (note that this security is not necessary);
+
+* Download counter and flag for free download ("/t", "/b",  "/tb") 
+can now be directly edited; old command Alt-1, Alt-2 and Alt-F are 
+no longer supported;
+
+* Added keyord "RepackOptimize"; this will make L-List  choice the 
+file shorter between the old and the recompressed one; using  this 
+option,  you  can optimize  the size  of your  file base,  running 
+"LList FixFBbs,Repack" using the most efficient archiver available 
+at the moment... each time a  new archiver  is available,  you can 
+repack again your filebase, converting to the new format only  the 
+files that reduce their size;
+
+* Packer name in FixFBbs option  can now  be specified  in command 
+line; that is, "LList FixFbbs,Repack:RAR";
+
+* Some  packer cfg  are pre-defined  (no need  to rewrite  them in 
+LList.Cfg): ZIP, ARJ, LZH, RAR, UC2;
+
+
+                          Whatsnew 1.02
+
+* Option TIC now  runs Raid  even if  no .Tic  file is  found, and 
+announces are then made only if any .Tic  file has  been correctly 
+processed;
+
+* Fixed bug with address put in path line;
+
+*  New ticnodes keyword, NOTIFY, that will send  a report  to each 
+ticnode marked with this  keyword "notify"  with info  about files 
+sent/received  via  TIC (automatically  sent each  month, or  even 
+before using command line option NOTIFY);
+
+* New command line options, ExportTicCfg  and ImportTicCfg;  LLIST 
+will  Write/Read  text  file  defined  with   keyword  TicCfg   in 
+LList.Cfg, and will Export/Import TIC info in standard tic format;
+
+* Support for SendOnly/ReceiveOnly nodes; in  ticareas definition, 
+a node is by default considered as SendOnly; a node from which  we 
+can receive files too, will be followed by a "*"; for example,
+
+Node 2:332/901 *
+
+if a "&" is added (ex: Node 2:332/901  *&), we  can receive  files 
+from that node, but we will not send files to him;
+Raid will add areas as SendOnly, or with  flags defined  in "Flag" 
+keyword in  tic area  definitions (for  example, pre-areas  should 
+have "*&" flags, so that downlink  nodes will  be anabled  to send 
+files to  your system  but will  not receive  files sent  by other 
+nodes; uplink node line will have no flag, so he will be  the only 
+node who  will receive  files sent  by your  downlinks); when  new 
+areas are  created, creating  node will  be added  as ReceiveOnly, 
+autolink nodes as SendOnly;
+!!! WARNING !!! Keep care to give your uplink for  tic file  areas 
+flag "*" (better, "*&" if you do not  send him  files), if  not L- 
+List will not accept files from that node;
+
+*  LList  now  tries  to  read  Desc.Sdi  if   it  fails   reading 
+File_Id.Diz;
+
+* Added command %RESCAN to L-List internal Raid; areas added after 
+this meta-command will be  added sending  all files  in area  with 
+relative tics to requiring node;
+
+* Fixed a bug with %RESEND;
+
+* L-List now reports exit code of executed external programs;
+
+* New  keyword in  packer cfg;  "KBytes" will  let you  define the 
+memory requirements of the packer, so that L-List  will swap  only 
+if free memory is not enough;
+
+
+                          Whatsnew 1.01
+
+* Options Alt-M and Alt-C now move/copy current file if no file is 
+tagged (otherwise all tagged files will be moved/copied);
+
+* Default option of L-List is now EditFBbs;  if you  want to  make 
+file lists,  you must  explicitly write  FILELIST on  command line 
+(Ex: LLIST FileList Area 1-10);
+
+*   Packer  engine  has  been  totally  re-written;  old  keywords 
+(ZipCompress, ZipUnCompress, etc) are no longer supported, while a 
+new powerful  configuration method  can let  you use  every packer 
+(look  at  Packer.Cfg for  more details);  Repack option  has been 
+added to Files.Bbs editor (Alt-R); if you defined  a valid  Repack 
+keyword  in  LList.Cfg,  compressed  file will  be converted  to a 
+Repack type compressed file; you can repack all  archive different 
+from Repack, using option "FixFBbs,Repack" in  command line  (this 
+could take much time);
+
+* Added function Search in Files.Bbs editor (Alt-W);
+
+* Added support for  EXCLUDE keywords  to Files.Bbs  editor (Alt-O 
+does no longer import files which match exclude specifications);
+
+* Added TIC command line option, that will process TIC  files; you 
+must define INBOUND, OUTBOUND, NETAREAID (AreaId of Netmail, to be 
+used for RAID, see next section for available commands), TICNODEs, 
+TICAREAs (these should be defined in a file named "TicAreas"), for 
+example:
+TicNode 2:332/313
+   Pw PASSWORD
+   ; Used for line "To" in .TIC
+   ;SysopName Sysop
+   ; used by RAID
+   ;Level 0
+   ; allow creation of new file areas if tic tag is unknown
+   ;Create
+   ; allow sending raid msg for other nodes (command %FROM <other_node>)
+   ;RemoteMaint
+   ; will be automatically linked to new created areas, if zone number matches
+   ;AutoLink
+   ; Select flavour (default Hold)
+   ;Crash
+   ;Normal
+   ; Send file only (without .TIC)
+   ;NoTic
+End
+; All TICAREAS must be written in a file named TICAREAS in LList dir
+TicArea LORA
+   DownLoad D:\LDN\LORA
+   ;Level 0
+   Address <Address>
+   Node 2:332/402
+End
+
+* List of available command for internal raid:
+%HELP    Info about use of RAID
+%LIST    Index of available file areas
+%QUERY   Index of linked file areas
+%UNLINKED Index of unlinked file areas
+%RESEND <FileName> Resend all files that match <FileName>
+%FROM <Address> Allow remote maintenance for other node
+%[+]ALL  Add all areas
+%-ALL    Remove all areas
+[+]AREATAG Add area AREATAG
+[+]AREATAG* Add areas whose name begins with AREATAG
+ç-AREATAG Remove area AREATAG
+-AREATAG* Remove areas whose name begins with AREATAG
+
+* Added HATCH option  in Files.Bbs  editor; current  file will  be 
+hatched in selected area;
+
+* Added  keyword NoOrphanUpdate  in LList.Cfg,  that will  prevent 
+LList from updating imported orphan files (in FixFBbs option);
+!!!  WARNING !!!  Index of areas  modified using  files.bbs editor 
+or fixfbbs batch maintenance  is always  updated, so  that if  you 
+don't change date of new imported files L-List will not be able to 
+find them in announce option; 
+
+* LList always adds File_Id.Diz to description of announced files; 
+first line and uploader line are preserved;
+
+* Now detection of new files is not based only on date.  A file is 
+considered new if its date is  greater of  last date  announce was 
+done OR if it is not present in fileidx; !!!!  WARNING !!!!   keep 
+care  to  have  the  index  file  updated  (that  is,  run  "LLIST 
+FileIdx"); if it is not updated, every file that is not present in 
+the index file will be announced.  Adding new announces, the index 
+updating  will  be  made  automatically  the  first time  that the 
+announce is processed (if the tag of the announce is not found  in 
+LLIST.TIM);
+
+* Announces are automatically made after having processed TIC;
+
+* Fixed  bug that  sometimes put  a "/b"  in files  description in 
+FixFBbs option;
+
+* Changed orphan management; description is obtained by  importing 
+File_Id.Diz  and  repacking it  (so that  you will  no longer  get 
+OrphanStr in  the first  line of  description); files  are updated 
+unless you insert "NoOrphanUpdate"  in LList.Cfg,  and File_Id.Diz 
+can be inserted only if you select "ReadFile_Id"  in command  line 
+(this could result in a second  line that  is a  duplicate of  the 
+first  line);  the  same  management strategy  is used  inside the 
+Files.Bbs editor (getting description and updating);
+
+* New registration site in UK (look at Register.Frm);
+
+* Added 2 areas, "Drive A:" and "Drive B:", to let you easily copy 
+files to and from diskettes;
+
+* Fixed offline and orphan detection in RA file-base (FixFBbs  and 
+EditFBbs options);
+
+* New macros in Files.Bbs  editor: <Shift-F1>  will let  you enter 
+avatar codes for colors, <Shift-F2> ansi codes;
+
+* Fixed a bug in getting macros from menu';
+
+* Added DosShell in Files.Bbs editor [F9];
+
+* Added support for 43 and  50 lines;  be sure  that your  graphic 
+adapter support selected mode!  you can switch to this mode inside 
+Files.Bbs editor using command line option  L43 or  L50 (you  will 
+switch to 43 if you have an EGA or to 50 if you have  a VGA,  this 
+parameter does not force rows number); these modes  will never  be 
+used under a multitasker; you can force use  of 43/50  lines every 
+time, adding keyword "Font8x8" in LList.Cfg; in this case, you can 
+swith back to 25 line mode using command line parameter L25;
+
+*  Added  support for  boolean operators  (OR and  AND) in  search 
+strings;  OR  is ignored,  while AND  will match  if previous  and 
+successive strings are bot found; Example,
+LList Search:?332*.*_AND_*313*.*_AND_/List*File
+
+* L-List does no longer search  keywords in  file name;  you muust 
+specify a path too if you want to search in the name;
+
+* L-List deletes now previous description of file  when adding  it 
+to another area (in TIC option and copy/move  option of  files.bbs 
+editor); ***  NOTE ***  L-List never  deletes a  previous existing 
+file (it  renames  the  ourrent  file instead),  this option  only 
+affects descriptions of missing files;
+
+* Added commad "Tag dupes files" (Alt-G) to Files.Bbs editor;
+
+*  L-List  now automatically  run Scan_Cd.Exe  when new  areas are 
+creted by internal TIC processor (cfg keyword SCAN_CD will let you 
+define parameters to use), Scan_Cd will run with following command 
+line:
+SCAN_CD <DirNewAreas> <Scan_Cd>
+Scan_Cd will be run  even if  no configuration  file is  found, in 
+order to create SysFile.*;
+

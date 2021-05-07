@@ -1,0 +1,2378 @@
+
+
+           ÛÛ              ÛÛ      ÛÛÛÛ    ÛÛÛÛ   ÛÛÛÛÛÛ
+           ÛÛ              ÛÛ       ÛÛ    ÛÛ  ÛÛ    ÛÛ
+           ÛÛ              ÛÛ       ÛÛ    ÛÛÛ       ÛÛ
+           ÛÛ     ÛÛÛÛÛÛ   ÛÛ       ÛÛ     ÛÛÛ      ÛÛ
+           ÛÛ              ÛÛ       ÛÛ       ÛÛÛ    ÛÛ
+           ÛÛ              ÛÛ       ÛÛ    ÛÛ  ÛÛ    ÛÛ
+           ÛÛÛÛÛÛ          ÛÛÛÛÛÛ  ÛÛÛÛ    ÛÛÛÛ     ÛÛ
+
+
+
+L-List -  File base utility v1.04
+(c) Copyright 1993-95 by Alessandro Trebbi
+All Rights Reserved
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+                                Table of Contents
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+1.0 Legal stuff . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1
+
+2.0 Registration  . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
+
+3.0 Contents  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4
+
+4.0 Thanks  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+
+5.0 Introduction  . . . . . . . . . . . . . . . . . . . . . . . . . . . 6
+
+6.0 Setting up  . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+   6.1 Supported BBS  . . . . . . . . . . . . . . . . . . . . . . . . . 7
+   6.2 Install  . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+   6.3 Configure  . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+
+7.0 LLIST.CFG . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+   7.1 BbsDir . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+   7.2 Config . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+   7.3 DatePattern  . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+   7.4 SysopName  . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+   7.5 BbsName  . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+   7.6 Address  . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+   7.7 ShortSize  . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+   7.8 Aka  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+   7.9 DcLimits . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+   7.10 DcLen . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+   7.11 LdChar  . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+   7.12 ScanVirus . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+   7.13 MaxFile_IdLines . . . . . . . . . . . . . . . . . . . . . . . . 10
+   7.14 MaxLenDesc  . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+   7.15 NoFirstLine . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+   7.16 OrphanStr . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+   7.17 OffLineStr  . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+   7.18 UploaderStr . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+   7.19 NoOrphanUpdate  . . . . . . . . . . . . . . . . . . . . . . . . 11
+   7.20 Exclude . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+   7.21 Repack  . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+   7.22 RepackOptimize  . . . . . . . . . . . . . . . . . . . . . . . . 11
+   7.23 NetAreaId . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+   7.24 MaxLev  . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+   7.25 BadFiles  . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+   7.26 InfectedFiles . . . . . . . . . . . . . . . . . . . . . . . . . 12
+   7.27 FixFbbsSort . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+   7.28 Header  . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+   7.29 Footer  . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+   7.30 Orphan  . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+   7.31 OffLine . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+   7.32 FirstLine . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+   7.33 Indent  . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+   7.34 LongSummary . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+   7.35 AllFiles  . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+   7.36 NewFiles  . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+   7.37 CompressLists . . . . . . . . . . . . . . . . . . . . . . . . . 13
+   7.38 NewDays . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+
+   7.39 FileIdx . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+   7.40 OkFile  . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+   7.41 NoDlPath  . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+   7.42 OkFilePwd . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+   7.43 OkLine  . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+   7.44 Bdl . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+   7.45 Font8x8 . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+   7.46 AltF1 .. AltF10 . . . . . . . . . . . . . . . . . . . . . . . . 14
+   7.47 CtrlF1 .. CtrlF10 . . . . . . . . . . . . . . . . . . . . . . . 14
+   7.48 AreaId  . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+   7.49 AreasBbs  . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+   7.50 Hudson  . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+   7.51 EchoRsn, NetRsn . . . . . . . . . . . . . . . . . . . . . . . . 14
+   7.52 Packer  . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+   7.53 Inbound . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+   7.54 OutBound  . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+   7.55 DirNewAreas . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+   7.56 FixCrcTic . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+   7.57 FixSizeTic  . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+   7.58 AnnounceExclude . . . . . . . . . . . . . . . . . . . . . . . . 15
+   7.59 AnnounceMsg . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+   7.60 SearchMaxFiles  . . . . . . . . . . . . . . . . . . . . . . . . 16
+   7.61 SearchMinLen  . . . . . . . . . . . . . . . . . . . . . . . . . 16
+   7.62 MaxBytesUUEncode  . . . . . . . . . . . . . . . . . . . . . . . 16
+   7.63 Search  . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+   7.64 Include . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+
+8.0 Selecting global parameters . . . . . . . . . . . . . . . . . . . . 18
+   8.1 AREA <n>|<n1-n2> [<n>|<n1-n2>] . . . . . . . . . . . . . . . . . 18
+   8.2 GROUP <n>|<n1-n2> [<n>|<n1-n2>]  . . . . . . . . . . . . . . . . 18
+   8.3 MAXLEV <n> . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+   8.4 NEWDAYS <n>  . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+   8.5 ORY (ORN), OFY (OFN), OTY (OTN)  . . . . . . . . . . . . . . . . 18
+   8.6 BDL <n>  . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+   8.7 NOOKFILE . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+   8.8 SORT, SORTDATE . . . . . . . . . . . . . . . . . . . . . . . . . 18
+   8.9 VC, VCN  . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+   8.10 CD, NOCD  . . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+   8.11 NODB  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+
+9.0 FileList  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+
+10.0 FileIdx  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+
+11.0 FixFBbs[,<opt>]  . . . . . . . . . . . . . . . . . . . . . . . . . 22
+
+12.0 Announce . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+
+13.0 Files.Bbs editor . . . . . . . . . . . . . . . . . . . . . . . . . 24
+   13.1 Help [F1] . . . . . . . . . . . . . . . . . . . . . . . . . . . 24
+   13.2 Delete line <Ctrl-Y>  . . . . . . . . . . . . . . . . . . . . . 24
+   13.3 Save Files.Bbs [F2] . . . . . . . . . . . . . . . . . . . . . . 24
+   13.4 Look at Files.Bbs [F5]  . . . . . . . . . . . . . . . . . . . . 24
+   13.5 Dos Shell [F9]  . . . . . . . . . . . . . . . . . . . . . . . . 24
+   13.6 Hurl <Alt-M>  . . . . . . . . . . . . . . . . . . . . . . . . . 24
+   13.7 View Content <Alt-V>  . . . . . . . . . . . . . . . . . . . . . 24
+   13.8 Import Desc <Alt-I> . . . . . . . . . . . . . . . . . . . . . . 24
+   13.9 Rewrap description <Alt-P>  . . . . . . . . . . . . . . . . . . 24
+   13.10 Tag/Untag current file <Alt-T> . . . . . . . . . . . . . . . . 24
+   13.11 Update current file <Alt-E>  . . . . . . . . . . . . . . . . . 24
+
+   13.12 Tag dupes files <Alt-G>  . . . . . . . . . . . . . . . . . . . 24
+   13.13 Tag missing files <Alt-0>  . . . . . . . . . . . . . . . . . . 24
+   13.14 Untag all files <Alt-U>  . . . . . . . . . . . . . . . . . . . 25
+   13.15 Move tagged lines [F4] [F3]  . . . . . . . . . . . . . . . . . 25
+   13.16 Copy <Alt-C> . . . . . . . . . . . . . . . . . . . . . . . . . 25
+   13.17 Tag new files <Alt-N>  . . . . . . . . . . . . . . . . . . . . 25
+   13.18 Repack (change archiver) <Alt-R> . . . . . . . . . . . . . . . 25
+   13.19 Adopt orphan file <Alt-O>  . . . . . . . . . . . . . . . . . . 25
+   13.20 Find keyword <Alt-W> . . . . . . . . . . . . . . . . . . . . . 25
+   13.21 Hatch <Alt-H>  . . . . . . . . . . . . . . . . . . . . . . . . 25
+   13.22 Get Desc from LList.Db <Alt-B>b  . . . . . . . . . . . . . . . 25
+   13.23 Check File <Alt-Z> . . . . . . . . . . . . . . . . . . . . . . 25
+   13.24 Execute shell <n> <Alt-F<n>> . . . . . . . . . . . . . . . . . 25
+   13.25 Macro <n> <Ctrl-F<n>>  . . . . . . . . . . . . . . . . . . . . 25
+   13.26 Insert AVATAR color <Shift-F1> . . . . . . . . . . . . . . . . 25
+   13.27 Insert ANSI color <Shift-F2> . . . . . . . . . . . . . . . . . 26
+
+14.0 Search . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27
+   14.1 Scan Msg base . . . . . . . . . . . . . . . . . . . . . . . . . 27
+   14.2 FSearch syntax  . . . . . . . . . . . . . . . . . . . . . . . . 27
+   14.3 Path strings  . . . . . . . . . . . . . . . . . . . . . . . . . 27
+   14.4 Keyword strings . . . . . . . . . . . . . . . . . . . . . . . . 27
+   14.5 Boolean operators . . . . . . . . . . . . . . . . . . . . . . . 27
+   14.6 Local searchs . . . . . . . . . . . . . . . . . . . . . . . . . 28
+
+15.0 Tic  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+   15.1 RAID  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+   15.2 Help  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+   15.3 Area list . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+   15.4 Linked area list  . . . . . . . . . . . . . . . . . . . . . . . 30
+   15.5 Unlinked area list  . . . . . . . . . . . . . . . . . . . . . . 30
+   15.6 Resend a file . . . . . . . . . . . . . . . . . . . . . . . . . 30
+   15.7 Rescan file base  . . . . . . . . . . . . . . . . . . . . . . . 30
+   15.8 Rescan limits . . . . . . . . . . . . . . . . . . . . . . . . . 30
+   15.9 Global info about a node  . . . . . . . . . . . . . . . . . . . 30
+   15.10 Link groups  . . . . . . . . . . . . . . . . . . . . . . . . . 30
+   15.11 Monthly report . . . . . . . . . . . . . . . . . . . . . . . . 30
+   15.12 %[-]TINYSEENBY Set TinySeenBy status . . . . . . . . . . . . . 31
+   15.13 %[-]ANNOUNCE Set Announce status . . . . . . . . . . . . . . . 31
+   15.14 %[-]SENDTIC Set SendTic status . . . . . . . . . . . . . . . . 31
+   15.15 PWD <password> Change your TIC password  . . . . . . . . . . . 31
+   15.16 %PACKER <packer> Change your packer  . . . . . . . . . . . . . 31
+   15.17 Add/Remove areas . . . . . . . . . . . . . . . . . . . . . . . 31
+
+16.0 Appendices . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+   16.1 Multitasker . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+   16.2 Bugs  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+   16.3 Examples  . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+
+17.0 Keeping in touch . . . . . . . . . . . . . . . . . . . . . . . . . 34
+
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+                                1.0 - Legal stuff
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+L-List is not a free software !!! L-List is ShareWare: you can try 
+it, and if you decide to use it after a short period of evaluation 
+(about 1 month), you must register. L-List required many hours  of 
+work: if you like it and would like  to support  me in  developing 
+this and other similar products, please register. See Register.Frm 
+for more details.
+
+No warranty of any kind is given with this program.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 1
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+                               2.0 - Registration
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+For registration:
+
+
+
+ * United Kingdom *
+The Snow Cave, 2:443/888@fidonet
+ TXH (2300-0800)
+ 0044,1662,247887
+ V32B,V42B,U,VFC
+
+Send a Cheque or Postal Order (or cash) for UK œ10 to:
+
+Steve Stacher
+1 Tattysallagh Road
+Omagh, Co. Tyrone BT78 5BW
+Northern Ireland
+
+No Credit Card facility available
+
+
+
+ * Italy / Other countries *
+NightMare, 2:332/901@fidonet
+ CM (24h/24h)
+ 0039,721,21317
+ H16,V32T
+
+Send a Postal Order (or cash) for 25.000 Italian Lire to:
+
+Alessandro Trebbi
+via Cecchi, 52
+61100 Pesaro
+Italy
+
+
+(looking for support nodes/registration sites in other countries)
+(please contact Alessandro Trebbi if you are interested)
+
+
+==================================================================
+
+The registration key will be sent via mail or netmail crash
+(select the way you prefer).
+
+You must fill following  registration form,  indicating your  name
+(that is, SysopName for  L-List), that  will be  used to  generate
+your personal key, and then deliver  it to  me (address  specified
+above) or Steve in the UK together with money.
+
+==================================================================
+
+                  ş L-List, Registration form ş
+
+   Name: ....................................
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 2
+
+Address: ....................................
+         ....................................
+         ....................................
+
+
+Type of Bbs:  Lora  Ra    Max   SBbs  QBbs  Other
+              [ ]   [ ]   [ ]   [ ]   [ ]   [ ]
+
+
+I'm using L-List as:
+  [ ] File list compiler
+  [ ] File finder
+  [ ] New files announcer
+  [ ] Files.Bbs editor
+  [ ] TIC processor
+
+                  L-List L. 25,000 (*)  UKœ 10
+                (* no forwarding expenses *)
+                         ---------
+                 Total  L. ..,...  œ .....
+
+
+Key forwarding method:  ( ) Netmail to ......... (**)
+                        ( ) Paper mail
+
+
+==================================================================
+
+(*) L. 25,000 correspond to: 10 UK œ, 15 US $, 25 DM
+(**)  The  netmail forwarding  method needs  a valid  Fidonet node
+number and an answering system capable of handling Fido-Technology
+Mail sessions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 3
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+                                 3.0 - Contents
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+You should have found following files in L-List package:
+
+ * LLIST.EXE     Executable
+ * LLISTP.EXE    OS/2 Executable
+ * LLISTCFG.ZIP  Example of configuration file, to be edited
+ * REGISTER.FRM  Info about registration
+ * LLIST.DOC     This file
+ * FILE_ID.DIZ   Package description
+ * WHATSNEW.nnn  Last changes
+
+These files are created by L-List for internal use:
+
+ * LLIST.TIM     Date for Announces
+ * FSEARCH.DUP   Searchs already done
+ * TIC.DUP       Files already sent
+ * LLIST.DB      List of announced files
+
+These files are created by L-List for your use:
+
+ * LLIST.BAD     Msg that could not be posted
+ * LLIST.LOG     Log file (can be renamed, setting environment
+                 variable LLISTLOG)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 4
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+                                  4.0 - Thanks
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+Thanks to:
+
+* Mark May, for his MkMsg libraries;
+* Matthew Mastracci for his Manual compiler;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 5
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+                               5.0 - Introduction
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+What does L-List do?  Really a lot of things...  you can use it to 
+make file lists, to edit your Files.Bbs, to announce new files, to 
+answer to msg requiring info about files in  your BBS,  to rewrite 
+your Files.Bbs, can keep an index file of all your files (used  by 
+Lora  for  file  request),  can  process  TIC  files,  can process 
+uploaded files testing integrity and presence of virus.  The major 
+advantage in having all these options together in the same utility 
+is that you will have to configure only one program and that  many 
+functions  can  be  accessed  from  options  that usually  are not 
+designed for this (for  example, you  can hatch  files inside  the 
+files.bbs editor just pressing a key and you can update  the magic 
+names both in OkFile and in  headers of  file lists  automatically 
+when processing Tic files).
+
+The first time you run L-List,  you will  subscribe the  terms for 
+evaluation period (up to 30 days); at the end of this  period, you 
+can choice between registering the software or deleting it, if you 
+think  that  it is  not useful;  however, you  can distribute  the 
+original archive, if you  do not  modify it  and if  no additional 
+cost is required (except distribution expenses).   You can  insert 
+this archive (with no  modification) in  any shareware  collection 
+(Cd-Rom, for example), but please let me know about it.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 6
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+                                6.0 - Setting up
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+ 6.1 Supported BBS
+
+L-List reads directly info  from several  configuration files;  it 
+can use Lora's SysFile.Dat (2.35), SuperBbs'  FlSearch.Bbs (1.16), 
+Maximus' Area.Dat (2.00). L-List can run even with only a Tic.Cfg, 
+with no need for Bbs configuration files.
+
+ 6.2 Install
+
+Make a directory, named LLIST, and unpack there  all files  in the 
+distribution package; L-List must be able to locate your file-area 
+configuration files (if you use it with a Bbs); this can be easily 
+made setting dos environment variable LORA or MAX,  or setting  it 
+in keyword BbsDir of LList.Cfg.  If you have no Bbs (or a Bbs that 
+is not supported), run Scan_Cd to import file areas from your HD & 
+CD. Now L-List is ready to  run, enjoy  it! If  L-List can't  find 
+your BBS cfg files, you will get areas only from Tic.Cfg (you must 
+copy your standard Tic.Cfg in L-List directory, create  it if  you 
+don't have any).
+
+ 6.3 Configure
+
+L-List uses a configuration file, where it will get parameters  to 
+run; most of  them can  be re-defined  by command  line (see  next 
+section).
+L-List  can  run  even  without  its  config  file,  using default 
+parameters; anyway, you should better edit example .Cfg (contained 
+in LLISTCFG.ZIP); no matter with it;  large comments  are provided 
+to help you in  this work.   In this  way you  will obtain  better 
+performances tuning fine L-List. In order  to get  L-List to  run, 
+follow these steps;
+* Copy your standard TIC.CFG to L-List directory (or create  it if 
+you don't have any, notes about its format  are given  in the  TIC 
+section of this doc), then run L-List; a few messages  will appear 
+(some cfg files will not be found); exit L-List now;
+* Edit LLTIC.CFG, that will have been created at this  point using 
+info read in TIC.CFG; change things  that have  non been  imported 
+correctly (mainly, you will  need to  change address  of TicAreas, 
+add a  line "Flag  *&" to  TicAreas which  are used  to send  pre- 
+release  to  your  uplinks,  adjusting  TIC  levels,  adding  line 
+"Notify",  "Hold",  "Crash",  "Create"  to TicNodes,  assign right 
+group to  each  TicArea,  change  some info  about TicGroups  (for 
+example, SDN file areas will have been put in two different groups 
+named 1 and 2; create a  unique TicGroup  named SDN,  and add  two 
+lines in it to  indicate both  GroupId ("GroupId  1" and  "GroupId 
+2"); note that you will still  need TIC.CFG,  as L-List  uses both 
+files;
+*  A Raid.Cfg can be created,  copying FileBone.*  ; this  will be 
+used for description of TicAreas;
+* At this point,  you can  edit LLIST.CFG,  where you  will define 
+some general info (NetMail  AreaId, Inbound  and OutBound  dir and 
+some other things); note that if you do not do this, L-List  tries 
+to read these info in Lora's  Config.Dat, then  in Tic.Cfg  and at 
+last will provide as default  value INBOUND\  and OUTBOUND\  in L- 
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 7
+
+List directory.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 8
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+                                 7.0 - LLIST.CFG
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+ 7.1 BbsDir
+
+Ex: BbsDir D:\LORA\
+
+Path to your BBS dir, where  LLIST will  look for  SYSFILE.DAT and 
+CONFIG.DAT; you have better set an  environment variable,  LORA RA 
+or MAX, which points to this directory; this will speed up L-List, 
+as it will automatically detect your kind of Bbs.
+
+ 7.2 Config
+
+Ex: Config Config1.Dat
+
+Name of LORA's  config file.  Default, CONFIG.DAT.  It is  read to 
+obtain various information, like data format.
+
+ 7.3 DatePattern
+
+Ex: DatePattern %D-%C-19%Y
+
+If you  use SBBS,  MAX oo  QBBS, define  this keyword;  using LORA 
+these will be read in Config.Dat defined above, unless you  define 
+them now.
+
+In the DatePattern:
+   %d : day (number)
+   %b : month (number)
+   %c : month (first three letters)
+   %y : year (last two numbers)
+Other chars will be left untouched ("/", "-", etc.)
+
+ 7.4 SysopName
+
+Ex: SysopName Alessandro Trebbi
+
+ 7.5 BbsName
+
+Ex: BbsName NightMare
+
+ 7.6 Address
+
+Ex: Address 2:332/313
+
+ 7.7 ShortSize
+
+Writes file size in a short format (that is, writes file size in 
+k).
+
+ 7.8 Aka
+
+Ex: Aka 15:1300/100.0
+
+Other  addresses.   Note  that  all  the   addresses  defined   in 
+AnnounceMsg, Search,  TicAreas, TicGroups  and as  Aka in  Tic.Cfg 
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 9
+
+will be considered your Aka.
+
+ 7.9 DcLimits
+
+Ex: DCLIMITS []
+
+Delimiters for Download counter. Using Lora, These will be read in 
+Config.Dat (unless you re-define them in LLIST.CFG).
+
+ 7.10 DcLen
+
+Ex: DCLEN 3
+
+Length of download counters: default=3, that is [  1]. All  values 
+are safe: if you set DCLEN 1, and you have long download counters, 
+you will get [1] [15] [210]; with DCLEN 4 you will get [ 1]  [ 15] 
+[ 210] ... each of these formats is fully supported by L-List in 
+detecting phase, whatever DCLEN you have set.
+
+ 7.11 LdChar
+
+Ex: LDCHAR >+|
+
+Characters searched at the head of a comment line, to determine if 
+it is the continue of previous description; in option  FIXFBBS, L- 
+List always uses first char.
+
+ 7.12 ScanVirus
+
+Ex: ScanVirus D:\NoBackUp\Scan\Scan /SUB /NOMEM
+
+ 7.13 MaxFile_IdLines
+
+Ex: MaxFile_IdLines 20
+
+Max number of lines read from File_Id.Diz
+
+ 7.14 MaxLenDesc
+
+Ex: MaxLenDesc 45
+
+Truncate File_Id.Diz lines
+
+ 7.15 NoFirstLine
+
+Does not preserve first  line when  File_id.Diz is  imported (only 
+for  FixFBbs  option;  editing  files.bbs  first  line  is  always 
+preserved, announcing new files is always stripped).
+
+ 7.16 OrphanStr
+
+Ex: ORPHANSTR (* Description Missing *)
+
+This description is used for imported orphan files, if L-List 
+can't find File_Id.Diz in it.
+
+ 7.17 OffLineStr
+
+Ex: OFFLINESTR (Stored OffLine)
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 10
+
+This string is written instead of Size and Date if L-List does
+not find the file in download path.
+
+ 7.18 UploaderStr
+
+Ex: UploaderStr ‹Mandato da: Š
+
+L-List can detect uploader  name in  file descriptions.   Uploader 
+name follows string defined as Uploader, and is  not deleted  with 
+option ReadFile_Id.
+
+ 7.19 NoOrphanUpdate
+
+Flag that will prevent LLIST from updating orphan  files.  If  you 
+use  it,  LLIST will  not manage  to detect  orphans as  new files 
+(files not updated will not be announced).
+
+ 7.20 Exclude
+
+Ex: EXCLUDE 00_Index.Txt
+
+EXCLUDE specifications (up to 32).  The  files which  matches with 
+one  of  this  specifications  AND  which  are  not  described  in 
+Files.Bbs, will never be imported as Orphans. Files.Bbs and *.Bak 
+are always excluded.
+
+ 7.21 Repack
+
+Ex: Repack RAR
+
+Destination archive type for recompress option.
+
+ 7.22 RepackOptimize
+
+Ex: RepackOptimize 5
+
+Flag to fail repack if new  size is  greater or  if it  gains less 
+than the optional number (percent).
+
+ 7.23 NetAreaId
+
+Ex: NetAreaId FD:\LORA\MSG\NET
+
+Netmail AreaId (if you use Lora, this is read in Config.Dat); Look 
+after, for info about format of AreaId
+
+ 7.24 MaxLev
+
+Ex: MaxLev 144
+
+Max level of listed  areas, can't  be increased  by command  line. 
+This value will be applied to all Search  and AnnounceMsg  defined 
+after,  you  can specify  this value  more than  once to  decrease 
+MaxLev of following Search and AnnounceMsg.
+
+ 7.25 BadFiles
+
+Ex: BadFiles C:\Upload\Bad
+
+ 7.26 InfectedFiles
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 11
+
+
+Ex: InfectedFiles C:\Upload\Virus
+
+Download path where infected files will be moved.
+
+ 7.27 FixFbbsSort
+
+Select how to sort description lines in FixFbbsoption.
+
+Ex: FixFbbsSort SortDate
+
+ 7.28 Header
+
+File(s)  to  add  at  the  head  of lists.  Multiple paths  can be 
+defined.
+
+Ex: Header LList.Hdr
+
+ 7.29 Footer
+
+File(s) to add at the foot of lists.
+
+Ex: Footer LList.Ftr
+
+ 7.30 Orphan
+
+Flag  to  include  orphan  files  (Default,  Y); it  is a  default 
+parameter, can be re-defined by command line using ORN or ORY.
+
+Ex: Orphan No
+
+ 7.31 OffLine
+
+Flag  to  include  offline  files (Default,  Y); it  is a  default 
+parameter, can be re-defined by command line using OFN or OFY.
+
+Ex: OffLine Yes
+
+ 7.32 FirstLine
+
+New First  Line (don't  add spaces,  it will  be centered  at half 
+screen).
+
+Ex: bFirstLine *-=> /\/ightMare  F I L E S <=-*
+
+ 7.33 Indent
+
+Indent description lines (default = 0), can be -20 to +20.
+
+Ex: Indent 0
+
+ 7.34 LongSummary
+
+Select an alternative  type of  summary report  (an area  for each 
+line, adds number of new files too).
+
+ 7.35 AllFiles
+
+Path to complete list ALLFILES. Default, AllFiles.Txt. This is the 
+name of Comma list too, created with FileIdx,Comma or FileIdx,Dup.
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 12
+
+
+Ex: AllFiles %TEMP%F332_901.Txt
+
+ 7.36 NewFiles
+
+Path to new files list NEWFILES. Default, NewFiles.Txt.
+
+Ex: NewFiles %TEMP%N332_901.Txt
+
+ 7.37 CompressLists
+
+Packer to use to pack list; can be one of packer names (see packer 
+section).
+
+Ex: CompressLists ZIP
+
+ 7.38 NewDays
+
+Max number of days to be inserted in  NEWFILES, and  to be  marked 
+with "*"  in ALLFILES.  Can be 0 to  180 (0  = no  NewFiles list), 
+default = 90, can be re-defined by command line.
+
+Ex: NewDays 90
+
+ 7.39 FileIdx
+
+Path to FILEIDX (Used by LORA for File  Requests).  It  is created 
+specifying FILEIDX in command  line and  kept updated  by ANNOUNCE 
+and EDITFBBS options.
+
+Ex: FileIdx D:\LORA\Files.Idx
+
+ 7.40 OkFile
+
+Path to OkFile list (for file requests).
+
+Ex: OkFile %TEMP%Files.Lst
+
+ 7.41 NoDlPath
+
+Prevents LList from writing download paths in OkFile.
+
+ 7.42 OkFilePwd
+
+Password to put in OkFile; Default, '' (no Password).  The  second 
+parameter (optional) is the  min level  from which  areas will  be 
+passworded.
+
+Ex: OkFilePwd SESAMO 176
+
+ 7.43 OkLine
+
+Lines to be added at OkFile; note that L-List does  no longer  add 
+FileIdx, so you will need to define here a line to let Lora use it 
+
+Ex: OkLine $D:\LORA\Files.Idx
+
+ 7.44 Bdl
+
+path to  Best Downloaded  Files (Default,  BDL.TXT); extension  is 
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 13
+
+used for .ASC version, L-List creates a .ANS and a .AVT file too.
+
+Ex: BDL %TEMP%Bdl.Txt 
+
+ 7.45 Font8x8
+
+Force 43/50 lines whenever is possible.
+
+ 7.46 AltF1 .. AltF10
+
+External Shells for Files.Bbs editor (AltF1 .. AltF10); %1 is  the 
+name of the current file; if not specified, the name of the 
+current file will be added at the end of the command.
+
+Ex: AltF1 Shez
+
+ 7.47 CtrlF1 .. CtrlF10
+
+Macros for Files.Bbs editor.
+
+Ex: CtrlF3 (* Descrizione Mancante *)
+
+ 7.48 AreaId
+
+The optional number at the end (after comma),  indicates the  type 
+of Msg Area: 0=Normal, 1=EchoMail (default), 2=NetMail.
+
+Message area identifiers have the following formats:
+
+Squish:  S followed by the path\filename of the message area
+   Example:  SC:\Max\Msg\Muffin[,<n>]
+
+Hudson H followed by a 3 digit area number follow by the  msg base 
+path
+   Example:  H007C:\Quick\MsgBase\[,<n>]
+
+Fido(*.Msg) F followed by the message path
+   Example:  FD:\FD\Mail\[,<n>]
+
+JAM J followed by the path\filename of the message area
+   Example: JC:\RA2\MSG\RA_UTIL[,<n>]
+
+Ezycom E followed by the 4 digit area number followed  by the  msg 
+base path
+   Example: E0001F:\EZY\MSG[,<n>]
+
+ 7.49 AreasBbs
+
+Path to a standard Areas.Bbs, used to convert AreaTag to AreaId.
+
+Ex: AreasBbs D:\LORA\AREAS.BBS
+
+ 7.50 Hudson
+
+Path to Hudson Base, used to convert AreaTag to AreaId.
+
+Ex: Hudson D:\MSG\HUDSON\
+
+ 7.51 EchoRsn, NetRsn
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 14
+
+Flag files created when Msg are written. These are intended  to be 
+used in batch files and/or multitasking environments.
+
+Ex: ECHORSN ECHOMSG.WRT
+    NETRSN NETMSG.WRT
+
+ 7.52 Packer
+
+Some packer names (ZIP, ARJ, LHA, LZH, ARC, PAK) are  used to  run 
+internal  compressed  file  viewers,   and  should   therefore  be 
+associated with right packer; any other packer is not supported by 
+internal viewer. Packer names must be 3 chars  long, and  indicate 
+extension of compressed file.
+%1 is  the name  of the  compressed file,  %2 is  the name  of the 
+file(s) to compress/uncompress; if %1 or %2 are not specified, 
+they will be added at the end of the command.
+Packers ZIP, ARJ, LHA, RAR and UC2 are already hard-coded, however 
+you can re-define them to change commands.
+
+Following keywords are used to identify packer.  L-List  will look 
+for ID sequence at OffSet <OffSet>.   SfX archives  are identified 
+searching ID after REAL exe size (with some known exceptions).
+
+Ex: OffSet 0
+    ID 504B0304
+
+Follwing keyword will be used to compress and  uncompress file  in 
+that kind of archive; these commands should allow recompressing.
+
+Ex: Pack ARJ a -a+ -r+ -y+ -jm1
+    UnPack ARJ x -y+ -jg+
+
+ 7.53 Inbound
+
+Ex: Inbound D:\INBOUND\
+
+ 7.54 OutBound
+
+Ex: Outbound D:\OUTBOUND\
+
+ 7.55 DirNewAreas
+
+Dir where new areas will be created;  new area  AREATAG identified 
+in group G1 will be created in <DIRNEWAREAS>G1\AREATAG\.
+
+Ex: DirNewAreas D:\LORA\FNEWAREA\
+
+ 7.56 FixCrcTic
+
+Import files anyway with no care to CRC.
+
+ 7.57 FixSizeTic
+
+Import files anyway with no care to SIZE.
+
+ 7.58 AnnounceExclude
+
+Files that L-List will never announce; Wildcards allowed.  You can 
+specify here files like your File  lists, that  are updated  daily 
+and that must not be announced.
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 15
+
+
+Ex: ANNOUNCEEXCLUDE ?332_901.*
+
+ 7.59 AnnounceMsg
+
+The tag after the keyword AnnounceMsg, up to 8 chars, must contain 
+only letters.  It is used to identify each msg.
+You must not re-define always: Origin, From, Address, To, Subject, 
+Prefix, Suffix, as LList will take this values from those  defined 
+in previous Msg; DestAddress (only for NetMail) and KludgeFdn must 
+be always re-defined.
+These are the initial values:
+   ORIGIN  = <BBSName>
+   FROM    = <SysopName>
+   ADDRESS = Main Address
+   TO      = "All"
+   SUBJECT = "New files on <BBSName>"
+   Prefix, Suffix
+           = Nil
+
+These are tha available keywords:
+
+AreaTag
+Subject
+AREA
+GROUP
+To
+Address
+DestAddress
+NoIbm
+Origin
+Prefix
+Suffix
+VC
+Fdn
+
+ 7.60 SearchMaxFiles
+
+Max files to be found for search function (Default, 50).
+
+Ex: SEARCHMAXFILES 10
+
+ 7.61 SearchMinLen
+
+Min length of search string (Default, 4).
+
+Ex: SEARCHMINLEN 3
+
+ 7.62 MaxBytesUUEncode
+
+Max size  of files  that can  be UUEncoded  (Default, 8192).  This 
+value will be used in each Search defined after, unless it is  re- 
+defined in the Search definition; UUEncoded file will be 1/3 
+longer than the UUUnencoded file.
+
+Ex: MAXBYTESUUENCODE 0
+
+ 7.63 Search
+
+Define a msg area to scan for msg to AllFix.  If you  don't define 
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 16
+
+a NetMail  area, NetAreaId  will be  automatically added.  Several 
+parameters can be defined:
+
+AreaTag
+AreaIdAns
+AREA
+GROUP
+NoIbm
+Origin
+Prefix
+Suffix
+bSearchDb
+BuildDb
+
+ 7.64 Include
+
+Define another .Cfg file to parse, same commands as LLIST-Cfg
+
+Ex: Include Key.Cfg
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 17
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+                        8.0 - Selecting global parameters
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+ 8.1 AREA <n>|<n1-n2> [<n>|<n1-n2>]
+
+Adds  the  file  area  specified  by  <n> [<n>],  or in  the range 
+specified by <n1-n2> [<n1-n2>]...  this command  can be  specified 
+more than once, first area is 0 and last 32767.  Using Lora,  area 
+number can be different from the record position  in config  file, 
+as  L-List   uses  area   number  specified   in  the   area  file 
+configuration.
+
+ 8.2 GROUP <n>|<n1-n2> [<n>|<n1-n2>]
+
+Same as AREA option; select groups to list.
+
+ 8.3 MAXLEV <n>
+
+L-List  will  discard  file  areas  whose  level  is  greater then 
+specified  level  in  numeric  form.  Can't  be greater  of MaxLev 
+command in LList.Cfg.
+
+
+ 8.4 NEWDAYS <n>
+
+This option overwrites the parameter defined in config  file (look 
+at it for details).  Can be  used with  n=0 if  you don't  want to 
+generate new files list, with n>0 will be  used as  max number  of 
+days that a file must have to be inserted in new files list.
+
+ 8.5 ORY (ORN), OFY (OFN), OTY (OTN)
+
+These options will let you select the kind  of files  to list:  L- 
+List knows 3 kinds  of files,  which are  ORFANI (presents  in the 
+download directory and not listed in  Files.Bbs and  which do  not 
+match any of EXCLUDE parameters defined  in config  file), OFFLINE 
+(listed in Files.Bbs but not present  in download  directory), and 
+other files  (files which  are not  orfani and  are not  offline).  
+Each of these kinds can be  separately selected  by command  line: 
+OTY (select other files) is default parameter, default  parameters 
+for OR  e OF  will be  got from  config file  (Orphan and  OffLine 
+keywords).
+
+ 8.6 BDL <n>
+
+This option will generate a list of Best Downloaded Files.  <n> is 
+the number of files to be classified, L-List  will create  a .ASC, 
+.ANS and .AVT bullettins, and a  report is  added at  the head  of 
+file lists.
+
+ 8.7 NOOKFILE
+
+This option prevents L-List from create OkFile list, with list  of 
+downloads directories (used for file request by Lora and Binkley).
+
+ 8.8 SORT, SORTDATE
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 18
+
+These options are used to sort files; default  is NoSort,  that is 
+files  will  be  listed  in  the  same  order  they  are  found in 
+Files.Bbs. Files will be listed in order specified in command line 
+only among each section  of Files.Bbs  standing between  comments; 
+this has been done to preserve  old comments,  as a  complete sort 
+would have put comments  in wrong  places; this  option is  active 
+only when making file  lists, while  when fixing  Files.Bbs L-List 
+will  use  value found  in option  FixFBbsSort.  In  other options 
+(search and announce) files will always be sorted  alphabetically.  
+This parameter does not affect order  of NewFiles  that is  always 
+sorted by date.
+
+ 8.9 VC, VCN
+
+Using this option, L-List will list  content of  compressed files; 
+.LZH, .ZIP, .ARC (.PAK)  and .ARJ  are supported  (self extracting 
+too).  This option will also list specifics of graphic files  .GIF 
+(version and resolution). VCN will list content  of files  only if 
+they are  new (that  is, whose  age is  less than  Newdays).  This 
+option can be used with Search option  too, adding  -VC (-VCN)  to 
+the string to look for (for example, Search:/Fax_/Modem_-VC).  
+
+ 8.10 CD, NOCD
+
+Include only Cd-Rom areas (Exclude Cd-Rom  areas, that  is include 
+only HD areas). If used together, no area will be listed.x
+
+ 8.11 NODB
+
+Used in conjunction with Search option in local mode, prevents  L- 
+List from searching files in LList.Db.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 19
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+                                 9.0 - FileList
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+By  default  L-List creates  AllFiles.Txt, complete  list of  your 
+ksystem, NewFiles.Txt,  files newer  than 90  days sorted  by date 
+(new files before), and OkFile.Lst, list of download paths for use 
+with binkley and compatible front-end. At the head of Allfiles.Txt 
+and NewFiles.Txt L-List adds several infos: a list of listed  file 
+areas,  a  list  of  Magic Names  (that you  must have  previously 
+defined in LList.Cfg), and a report of Most Downloaded Files.  You 
+can insert your banners at the end and at the  foot of  the lists, 
+adding their names after keyword HEADER  and FOOTER  in LList.Cfg. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 20
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+                                 10.0 - FileIdx
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+With this option L-List will update/create an index file which  is 
+used  by  Lora for  file requests  (with performances  better than 
+using OkFile); L-List uses this file too, in  order to  detect new 
+files to announce.
+
+*Hint* FileIdx is automatically updated after announce, so  define 
+an AnnounceMsg that will scan all areas and run announce option to 
+keep this file updated.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 21
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+                             11.0 - FixFBbs[,<opt>]
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+This  extended  option will  rewrite Files.Bbs,  according to  the 
+options  specified;  for example,  using OFN  e ORY  will let  you 
+import orphan files (adding a line in Files.Bbs with file name and 
+standard  description  defined  in  config file  as ORPHANSTR  and 
+getting description from File_Id.Diz contained in compressed file; 
+imported file will be updated so that it will be  found as  new by 
+Announce option) and deleting  description of  deleted files  from 
+Files.Bbs.
+New  Files.Bbs  will  be  sorted  according  to  the   cfg  option 
+FixNewFBbs (default, no sort). If you  select OTN,  the new  index 
+file  will  be  created  with  extension  .NEW, otherwise  the old 
+Files.Bbs  will  be  overwritten  and  a  back-up Files.Bbs,  with 
+extension .BAK, wilol be created.
+You can import description  from File_Id.Diz  from any  file using 
+FixFBbs,ReadFile_Id (by default, this  option is  only active  for 
+imported orphan files; using ,Pack too will rewrap description got 
+from File_Id.Diz),  and repack  files different  from Repack  type 
+(look at example cfg) to Repack type using FixFBbs,Repack, make  a 
+check   using   FixFBbs,Check   (you   can  define   BadFiles  and 
+InfectedFiles download directories, so that L-List will move files 
+that do not pass the test).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 22
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+                                 12.0 - Announce
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+This option will write Msg with announce of new files.   Detection 
+of new  files is  based on  date (a  file is  new if  its date  is 
+greater than the last time you ran Announce)  and on  the presence 
+in  index  file  (see  FileIdx section  above). L-List  will never 
+search new files in Cd-Rom areas and will not announce  files that 
+match any of ANNOUNCEEXCLUDE keywords. You must define AnnounceMsg 
+in LList.Cfg (by default, L-List will make an announce to Sysop in 
+NetMail scanning all file areas, useful to maintain  FileIdx index 
+file).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 23
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+                             13.0 - Files.Bbs editor
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+This option is used to edit directly Files.Bbs.
+
+ 13.1 Help [F1]
+
+Help about available commands
+
+ 13.2 Delete line <Ctrl-Y>
+
+Delete  current  line;  if  it  is  the  unique  line  of  a  file 
+description, you will be prompted for file delete.
+
+ 13.3 Save Files.Bbs [F2]
+
+Save Files.Bbs if ny change has been made.
+
+ 13.4 Look at Files.Bbs [F5]
+
+Look at Files.Bbs
+
+ 13.5 Dos Shell [F9]
+
+Dos Shell.
+
+ 13.6 Hurl <Alt-M>
+
+Tagged files (or current file if none is tagged) will be moved  in 
+the selected area.
+
+ 13.7 View Content <Alt-V>
+
+View content of compressed files.
+
+ 13.8 Import Desc <Alt-I>
+
+Import File_Id.Diz or Desc.Sdi in Files.Bbs description.
+
+ 13.9 Rewrap description <Alt-P>
+
+Rewrap description
+
+ 13.10 Tag/Untag current file <Alt-T>
+
+Tag/Untag current file.
+
+ 13.11 Update current file <Alt-E>
+
+Update current file.
+
+ 13.12 Tag dupes files <Alt-G>
+
+Tag dupes files.
+
+ 13.13 Tag missing files <Alt-0>
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 24
+
+Tag missing files
+
+ 13.14 Untag all files <Alt-U>
+
+Untag all files.
+
+ 13.15 Move tagged lines [F4] [F3]
+
+F4 Moves tagged lines before current  line in  the order  in which 
+they were tagged; F3 dort them in alfabetical order.
+
+ 13.16 Copy <Alt-C>
+
+Copy  tagged  files (or  current file  if none  is tagged)  in the 
+selected area.
+
+ 13.17 Tag new files <Alt-N>
+
+Tag new files
+
+ 13.18 Repack (change archiver) <Alt-R>
+
+Repack current  file to  the selected  archive type;  you will  be 
+prompted to choice between repacked file and old one.
+
+ 13.19 Adopt orphan file <Alt-O>
+
+Adopt orphan  files; L-List  will try  to read  packed description 
+(File_Id.Diz or Desc.Sdi).
+
+ 13.20 Find keyword <Alt-W>
+
+Find  keyword.   String  format  is the  same supported  by search 
+strings, wildcards and bollean operators supported.
+
+ 13.21 Hatch <Alt-H>
+
+Hatch current file in the seleected tic area.
+
+ 13.22 Get Desc from LList.Db <Alt-B>b
+
+Get desc from LList.Db.
+
+ 13.23 Check File <Alt-Z>
+
+Check file for integrity and presence of virus.
+
+ 13.24 Execute shell <n> <Alt-F<n>>
+
+Execute shell <n>.
+
+ 13.25 Macro <n> <Ctrl-F<n>>
+
+Macro <n>
+
+ 13.26 Insert AVATAR color <Shift-F1>
+
+Insert AVATAR color
+
+ 13.27 Insert ANSI color <Shift-F2>
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 25
+
+
+Insert ANSI color
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 26
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+                                  14.0 - Search
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+ 14.1 Scan Msg base
+
+Using only SEARCH, L-List will scan msg areas specified in  config 
+file  looking  for  Msg  to  "AllFix",  "AllFix+", "LList"  and to 
+"FSearch"; you can specify keywords in  Msg Subject,  separated by 
+spaces (enclose in double quotes if  keyword contains  spaces), or 
+in Msg Text, in lines starting with DIR or KEYWORD;  L-List has  a 
+powerful wildcard management, using "?"  and  "*"  you  can easily 
+search every file.  When a valid Msg is found, L-List will process 
+the information  request searching  in areas  specified in  Search 
+definition (look at Example.Cfg for details),  and will  answer if 
+it finds files which match the information request.
+
+ 14.2 FSearch syntax
+
+You must specify strings to search for in the msg  subject; L-List 
+will answer to your Msg if any matching file is found (or  even if 
+no file was found, but it was a  private Msg);  if many  files are 
+found,  L-List  will  stop  search  when  it has  found more  than 
+SEARCHMAXFILES files, adding at the end of the answer Msg  info on 
+how to obtain more info (that can be done sending a Msg  with same 
+subject  but  now  addressed  to  LLIST  <Node>,  that  is  simply 
+answering to L-List response message).
+
+ 14.3 Path strings
+
+Path strings are only searched in file name, in Dos style; you you 
+can also  use the  "*" to  match filenames  with specific  letters 
+somewhere  inside  the  name,  for  example  *113*.*; you  can use 
+wildcards in any combiantion you desire,  for example  LL*ST*.*; a 
+path is specified as it is in a Msg Subject;
+
+ 14.4 Keyword strings
+
+Keyword strings are searched in file  description, conceptually  a 
+<keyword> is always searched as if it were *<keyword>*, and it can 
+contain wildcards like a path ("?"  and "*"); it can  be specified 
+in Msg subject (or in command line) preceeded by a "/" or  between 
+""", that is you must write either /4DOS or "4DOS" if you  want to 
+search 4DOS in file name and  in file  descriptions. Other  robots 
+often do  not support  wildcards in  keyword strings,  if you  are 
+writing a  Msg that  will be  processed by  other filefinder,  add 
+another  keyword  in subject  of Msg  obtained stripping  "*"  and 
+substituting "?"  with blanks; this keyword string will not affect 
+L-List performances, as L-List searchs only  most generic  strings 
+(does not search for strings that will be automatically matched if 
+a more generic string is matched).
+
+ 14.5 Boolean operators
+
+Normally,  different  strings specified  in the  same subject  are 
+searched assuming a OR  conncetion; if  you want  to search  files 
+that match two or more strings,  you must  write AND  between each 
+other. A not operator is supported  too; if  the first  char of  a 
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 27
+
+string or of a path is a "~" (#126), only files that do not  match 
+the string will be found.
+
+ 14.6 Local searchs
+
+If you specify the strings to search for in the command line after 
+a "SEARCH:", L-List will scan directly  file base;  the format  is 
+the same used in msg subject, except that blanks can't be used and 
+must be substituted by underscore.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 28
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+                                   15.0 - Tic
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+With this option, L-List will manage tic files; tic areas  and tic 
+nodes  must  be  defined  in LLTic.Cfg.   Tic nodes  can be  given 
+several  flags  (Level, Create,  AutoLink, Notify,  NoTic, Packer, 
+that  can  be set/reset  through RAID  processor).  Tic  area will 
+contain general info about the area (Level, Repack,  Flags), while 
+info about echo nodes will be read from a standard Tic.Cfg file.
+When  you  run  TIC  option,  L-List  first  will  scan  NetAreaId 
+searching Msg to Raid, then will process Tic files in inbound dir, 
+and at  last will  make announces  if any  Tic has  been correctly 
+processed. The first time it will be enough to edit a Tic.Cfg file 
+like following (LLTic.Cfg will be automatically created, and  will 
+need some minor changes later):
+=============================================
+AREA D:\file\ECHOLIST ECHOLIST
+        1:150/503 Passwrd1 *C
+        1:150/3 Passwrd2 H
+
+AREA c:\subdir SOFT
+        1:129/11 hithere *
+        1:266/22 bloom FC
+        1:266/21 hat C
+
+AREA c:\file\ticktest TICKTEST
+        Local ListName c:\files\RBBS.LST
+        1:266/1 Passwrd1 CA0
+        2:512/26 Pass2p HA1
+==============================================
+
+ 15.1 RAID
+
+The  RAID  processor  is  very  powerful;  these are  the commands 
+available to each node (some additional commands will be available 
+to  RemoteMaint  nodes, allowing  them to  send them  commands for 
+other  nodes  and  change  some  reserved  options like  level and 
+other).
+
+ 15.2 Help
+
+%HELP    Info about use of RAID
+
+List of available RAID commands with a short help;
+
+ 15.3 Area list
+
+%LIST    Index of available file areas
+
+Index of available file  areas; the  name will  be preceeded  by a 
+char, that will show if it  is already  linked ("*"   or "+",  "+" 
+means  that  area is  linked but  its level  is greater  than node 
+level, that is it can't be unlinked) or unlinked (no char or  "-", 
+"-" means that area can be linked because its level is too  high); 
+after the name, follows the info about level and flags, and then a 
+description of the area  (you will  need to  edit Raid.Cfg  to add 
+descriptions, otherwise this fiels will report simply the tag);
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 29
+
+
+ 15.4 Linked area list
+
+%QUERY   Index of linked file areas
+
+Index of available file areas; only linked areas will be  reported 
+using this command;
+
+ 15.5 Unlinked area list
+
+%UNLINKED Index of unlinked file areas
+
+Index  of  available  file  areas;  only  unlinked  areas  will be 
+reported using this command;
+
+ 15.6 Resend a file
+
+%RESEND <FileName> Resend file that matches <FileName>
+
+The <FileName> will be re-hatched to the requiring node; you  must 
+be linked to the area (identified by the  download path)  in which 
+the file is found;
+
+ 15.7 Rescan file base
+
+%RESCAN Send all files in areas linked after this line
+
+This command, used before linking one  or more  areas, will  force 
+RAID  to  send  newfiles  (according  to  %DAYS) that  are already 
+present in the linked areas;
+
+ 15.8 Rescan limits
+
+%DAYS <n> Max days for rescan
+
+Maximum number  of days  that a  file must  have, in  order to  be 
+considered new and be resent by a %RESCAN;
+
+ 15.9 Global info about a node
+
+%INFO    Some info about your node
+
+This  will  report  the  current  setting  for  several  flags and 
+options;
+
+ 15.10 Link groups
+
+%[-]AUTOLINK <Groups> AutoLink to new created areas of selected group
+
+When  a  new area  is created,  L-List will  try to  detect if  it 
+belongs  to  a  TicGroup  looking  at  the beginning  of its  tag; 
+%AUTOLINK and %-AUTOLINK will let you  link/unlink to  a TicGroup, 
+so that you can automatically link to any created area;
+
+ 15.11 Monthly report
+
+%[-]NOTIFY Set Notify status
+
+RAID will monthly send a report  of files  received/sent to  nodes 
+which have this flag active;
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 30
+
+
+ 15.12 %[-]TINYSEENBY Set TinySeenBy status
+
+This command will allow you to  remove most  of Seenby  lines from 
+.Tic that will dramatically decrease their size;
+
+ 15.13 %[-]ANNOUNCE Set Announce status
+
+This command will let you choose the state  for Announce  flag; if 
+set to YES, a netmail msg will be sent to a node  each time  a new 
+file is sent to him;
+
+ 15.14 %[-]SENDTIC Set SendTic status
+
+This will send files without the correspondign .Tic;
+
+ 15.15 PWD <password> Change your TIC password
+
+Password used in .Tic (Pw field);
+
+ 15.16 %PACKER <packer> Change your packer
+
+Setting a packer differnt form NONE (Example,  ZIP, ARJ,  ...), L- 
+List will pack all .Tic in  a same  file (.ZIC,  .AIC, ...);  note 
+that L-List automatically detects  this file  and can  process the 
+received ones automatically;
+
+ 15.17 Add/Remove areas
+
+%[+]ALL  Add all areas
+%-ALL    Remove all areas
+[+]AREATAG Add area AREATAG
+[+]AREATAG* Add areas whose name begins with AREATAG
+-AREATAG Remove area AREATAG
+-AREATAG* Remove areas whose name begins with AREATAG
+
+These command  can let  you link/unlink  a single  file area  or a 
+bgroup (Note: %ALL is the same as *, %-ALL is the same as -*); 
+using *,  AutoLink will  be modified  too, if  any TicGroup  has a 
+GroupId that starts with the name of the area; for example, if you 
+sxend a command 1-*, you will be linked to all areas whose tag 
+begins with 1- like 1-GAME, 1-UTIL, etc; then, if you have defined 
+a  TicGroup  SDN  whose  GroupId  starts  with  1-,  you  will  be 
+autolinked to this group);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 31
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+                                16.0 - Appendices
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+ 16.1 Multitasker
+
+L-List is multitasker aware, due to the method it uses to look for 
+files and to wait for keyboard input; you can run  multiple copies 
+of L-List, setting in each task the environment  variable LLISTLOG 
+to a different value (this will  be the  full path  of L-List  log 
+file).   It  can  be  useful to  set attribute  +r (read  only) to 
+LList.Exe, in order to allow access to Disk Overlay from  multiple 
+programs (Disk Overlay are used if XMS/EMS are not available).
+
+ 16.2 Bugs
+
+Sometimes you could get a Runtime  Error, that  will be  logged in 
+your log file; these are the most common:
+
+RTE 003; You have simply miss defined a path name; check LList.Cfg 
+for wrong path names;
+
+RTE 203: You need more memory, could happen  with very  large file 
+areas; run LList after having freed some memory.
+
+If you get any other RTE,  please send  me info  about it:  number 
+(xxx), address (xxxx:xxxx), Files.Bbs of area  where it  happened, 
+your LList.Cfg and command line you used.
+
+ 16.3 Examples
+
+Generate several file lists (AllFiles, NewFiles, OkFile)
+========================================================
+LList FileList
+
+Generate filelist of TicGroup SDN
+=================================
+LList FileList Fdn Sdn
+
+Generate only AllFiles.Txt, sorting files by name
+=================================================
+LList FileList NewDays 0 NoOkFile Sort
+
+Generate all AnnounceMsg
+========================
+LList Announce
+
+Fix Files.Bbs in Area #1 (import orphans, deletes offlines)
+===========================================================
+LList Area 1 FixFBbs,Repack,Check OrY OfN
+
+Create list of orphan files
+===========================
+LList FileLIst NewDays 0 NoOkFile OtN OfN OrY
+
+Scan msg base for msg to LList, and answers if any is found
+===========================================================
+LList Search Ofn
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 32
+
+
+Search locally for "MODEM", output to console (with content of files)
+=====================================================================
+LList Search:Modem_-VC NODB
+
+Search locally for "MODEM" in  LLIST.DB (Area 0 should not exist)
+=================================================================
+LList Area 0 Search:Modem
+
+Update fileidx
+==============
+LList FileIdx Area 1-100
+
+Create list of dupes files
+==========================
+LList CommaDup
+
+Process TIC files
+=================
+LList TIC
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 33
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+                             17.0 - Keeping in touch
+
+     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+If you find a bug anywhere in the program on in the documentation, 
+please report it immediately to one of the addresses below.  Also, 
+if you have any problems with the program or any suggestions, send 
+them my way.
+
+     I can be contacted by any of these ways:
+
+     Fidonet:
+
+     2:332/901 @ Alessandro Trebbi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                         LLIST v1.04b4 - Page 34
+
+This manual compiled using MC v1.05 by Matthew Mastracci

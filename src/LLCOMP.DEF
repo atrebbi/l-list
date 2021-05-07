@@ -1,0 +1,5 @@
+Const 
+    Versione: String[16] = 'v2.15';
+    CompYear = '1993-96';
+    CompDate = 'Compiled on 11-07-96';
+    RegisteredOnly = True;

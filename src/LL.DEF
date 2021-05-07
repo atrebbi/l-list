@@ -1,0 +1,24 @@
+{$I Ovr.Def}
+
+{$I+}
+{$V-}
+{$S+}
+{$D-}
+{$L-}
+{$R-}
+
+{$IFDEF OVR}
+{$O+}
+{$F+}
+{$ENDIF}
+
+{$IFDEF OS2}
+    {$IFDEF VIRTUALPASCAL}
+    {$ELSE}
+       {$DEFINE NO4350}
+    {$ENDIF}
+{$ENDIF}
+
+{$IFDEF DPMI}
+    {$DEFINE NO4350}
+{$ENDIF}

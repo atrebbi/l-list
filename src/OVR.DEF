@@ -1,0 +1,9 @@
+
+{$IFDEF OS2}
+{$ELSE}
+   {$IFDEF DPMI}
+   {$ELSE}
+      {$DEFINE OVR}
+   {$ENDIF}
+{$ENDIF}
+

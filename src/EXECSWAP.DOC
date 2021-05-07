@@ -1,0 +1,355 @@
+                        More Memory for DOS Exec
+                              Kim Kokkonen
+
+As many have lamented, the 640K of memory available to DOS programs is
+looking smaller every year. With TSR's gobbling up memory on one end,
+and our applications growing larger on the other, it is easy to use up
+all the space and then some. Of course, necessity is the mother of
+invention, so desperate DOS programmers have devised a number of ad hoc
+methods to cram more functions into the same space -- by using expanded
+and extended memory, overlays, and so on.
+
+This article describes another such method. We've enhanced the DOS Exec
+function by swapping most of the calling program into expanded memory or
+to disk, and giving all that free memory to the child process. When the
+subprocess is complete, the calling program is swapped back into place
+and continues normally. This technique is especially valuable for menu-
+ing environments which must execute other large programs, or modern pro-
+gramming editors which are expected to spawn huge compilations at the
+touch of a key. In fact, it's useful for any program that must invoke
+another.
+
+The swapping Exec function is implemented in a Turbo Pascal 5.0 unit
+called ExecSwap. The real meat of the code is written in assembly
+language, however, and with some changes could be linked into other
+languages such as C or Fortran.
+
+Turbo Pascal Program Organization
+---------------------------------
+To explain how ExecSwap works, we'll need to delve into the organization
+of a Turbo Pascal program. Let's examine the program shown in Figure 1.
+What this program (named X) does isn't important. We'll just use it to
+show the arrangement of memory. X uses two of Turbo's standard units,
+Crt and Dos. It also implicitly uses the System unit, as does every
+Turbo Pascal program.
+
+Figure 2 maps out the various segments. (You can see a similar map of a
+real program by having the compiler create a MAP file and inspecting the
+segment map at the beginning of that file.) It's important to note that
+each Pascal unit has its own code segment (denoted by CS_xxx in Figure
+2), and that the code segments are arranged in what might seem like
+reverse order. That is, the unit appearing first in the USES statement
+is linked at the highest memory address, while the main program has the
+lowest code segment. If the program doesn't need to use the heap, the
+memory above the heap base may not be allocated.
+
+Figure 1: Example Program
+
+      program X;
+      uses {System,} Dos, Crt;
+      begin
+        ClrScr;
+        Exec('C:\COMMAND.COM', '');
+      end.
+
+Figure 2: Memory Map of Example Program
+
+      PSP:           program segment prefix            lower addresses
+      CS_X:          X code                                   |
+      CS_Crt:        Crt code                                 |
+      CS_Dos:        Dos code                                 v
+      CS_System:     System code                       higher addresses
+      DS:            initialized data                         |
+                     uninitialized data                       |
+      SS:            stack                                    v
+      HeapOrg:       heap base
+      HeapPtr:       heap high water mark
+                     available heap space
+      FreePtr:       free list
+      FreePtr+1000h: top of program
+                     available DOS memory
+      xxxx:          top of memory
+
+ExecSwap's goal is to copy most of the memory used by the program to
+secondary storage and then to deallocate that memory. ExecSwap needs to
+leave only enough of itself behind to call DOS Exec and restore the
+image when the child process returns.
+
+By this criterion, the best place for ExecSwap's code would be in the
+main body of the program. In this way, it could start swapping memory at
+the lowest possible code segment and free the most memory for the child
+process. In Figure 2's terms, it would start swapping at code segment
+CS_X and continue to the top of the program. After deallocating memory,
+the only overhead would be the program segment prefix (256 bytes) plus
+the portion of segment CS_X required to undo the swap. Figure 3 shows
+what memory might look like while the child process was active. The rest
+of program X would have been stored in EMS memory if available, or in a
+disk file if not.
+
+Figure 3: Memory Map while Child Process is Active
+
+      PSP:           program segment prefix      | ExecSwap
+      CS_X:          X code (partial)            | overhead
+        .--------------------------------------------------
+        |  child program  program segment prefix
+        |  ...
+        |  xxxx:          top of memory
+
+There's another factor to consider, though. ExecSwap should be conven-
+ient to use in more than just one program. Hence, we've made it a self-
+contained unit which is available just by adding it to the main pro-
+gram's USES statement. Considering Figure 2 again, it's clear that when
+we USE ExecSwap we want to add it at the very end of the list. In that
+case, the memory map will look like Figure 4. The memory that remains
+allocated during the Exec is the PSP, the code in the main program X,
+and whatever part of ExecSwap must remain resident.
+
+Figure 4: Memory Map after using ExecSwap
+
+      PSP:           program segment prefix
+      CS_X:          X code
+      CS_ExecSwap:   ExecSwap code               <-----------
+      CS_Crt:        Crt code
+      CS_Dos:        Dos code
+      CS_System:     System code
+      ...
+      xxxx:          top of memory
+
+The main program's code segment need not be very large, of course. In
+the extreme case, the main program would consist of nothing but a USES
+statement and a single procedure call to another unit. This reduces the
+overhead of the Exec call to essentially just the PSP plus ExecSwap
+itself. And that's not much: ExecSwap's resident portion consumes less
+than 2000 bytes.
+
+Using ExecSwap
+--------------
+Before we plunge into the mechanics of ExecSwap, we'll describe how it
+is used by an application. The unit interfaces three routines, shown in
+Figure 5. Before performing an Exec call, the program must call
+InitExecSwap. This routine computes how many bytes to swap and allocates
+space to store the swapped region.
+
+Figure 5: ExecSwap Routines
+
+  function InitExecSwap(LastToSave : Pointer;
+                        SwapFileName : String) : Boolean;
+    {-Initialize for swapping, returning TRUE if successful}
+
+  function ExecWithSwap(Path, CmdLine : String) : Word;
+    {-DOS Exec supporting swap to EMS or disk}
+
+  procedure ShutdownExecSwap;
+    {-Deallocate swap area}
+
+The swapped region of memory starts just beyond the resident portion of
+ExecSwap. The programmer must specify the _end_ of the region with the
+parameter LastToSave, since the choice depends on how the program uses
+the heap. What we choose for LastToSave affects only the size of the
+swap file, or the amount of EMS memory needed, but has no effect on
+resident overhead during the Exec call.
+
+There are three reasonable values for LastToSave. Passing the System
+variable HeapOrg tells ExecSwap not to save any part of the heap; this
+is the correct option for programs that make no use of the heap. Passing
+HeapPtr causes ExecSwap to save all allocated portions of the heap. Only
+the free list is ignored, so this is a good choice for programs that
+don't fragment the heap. Passing the expression Ptr(Seg(FreePtr^)+$1000,
+0) tells ExecSwap to save the entire heap, including the free list. This
+is the most conservative option, but it may lead to swap files
+approaching 640K bytes in size.
+
+InitExecSwap's second parameter, SwapFileName, specifies the name and
+location of the swap file. If EMS memory is available, this name won't
+be used, but otherwise InitExecSwap will create a new file. InitExecSwap
+assures that sufficient EMS or disk space exists for the swap, otherwise
+it returns FALSE. It's a good idea, of course, to put the swap file on
+the fastest drive that will hold it, to minimize swap times. It's also
+prudent to avoid a floppy drive, since the user may change disks while
+the child process is active. The swap file remains open, using a file
+handle, until ShutdownExecSwap is called or the program ends.
+InitExecSwap marks the file with the Hidden and System attributes so
+that the user of the child process won't be tempted to delete it.
+
+ExecWithSwap is analogous to the standard Exec procedure in Turbo's Dos
+unit. Its first parameter is the pathname of the program to execute, and
+the second is the command line to pass to it. The only difference from
+Exec is that ExecWithSwap is a function, returning the status of the
+call in a Word. The function returns DOS error codes, with one excep-
+tion. Figure 6 lists the most common codes.
+
+Figure 6: ExecWithSwap Error Codes
+
+  0  Success
+  1  Swap error (no swap storage, disk error, EMS error)
+  2  File not found
+  3  Path not found
+  8  Insufficient memory
+
+You may never need to call ShutdownExecSwap, since ExecSwap sets up an
+exit handler that automatically calls it when the program ends. In some
+cases, however, you may want to close and erase the swap file or regain
+EMS space before continuing.
+
+There's a small conundrum here. We've said ExecSwap should be last in
+the USES list, and we also want the main program to do as little as
+possible. So where do we place calls to the ExecSwap routines? It's
+easiest to call them from the main program, and take the hit in
+overhead. Turbo Pascal provides a better key to the puzzle, though.
+Version 5 supports procedure variables, and version 4 makes it easy to
+fake them. So what we do is this: in the main program, assign the
+address of each ExecSwap procedure to a procedure variable declared in a
+unit used early in the USES list. Then call ExecSwap's routines in any
+later unit by referring to the procedure variables.
+
+One caution about using ExecSwap: since most of your program's code
+isn't in memory while the child process runs, it's essential that the
+program's interrupt handlers be deactivated first. Turbo Pascal 5
+provides a handy procedure called SwapVectors that does this for all the
+System interrupt handlers. Call SwapVectors just before and after
+ExecWithSwap, and treat any of your own handlers in a similar fashion.
+
+Listing 1 offers a simple example of using ExecSwap. You can assemble
+EXECSWAP.ASM (Listing 3) using MASM 4.0 or later, or any compatible
+assembler. Then compile the test program to an EXE file and run it, and
+you'll enter a DOS shell. If you have a DOS memory mapping utility,
+you'll see that the TEST program is using less than 3K of memory. The
+swap file uses about 20K, most of that for the 16K stack which is
+Turbo's default. If the swap goes to EMS, the EMS block will be 32K
+bytes, since EMS is allocated in 16K chunks. Type Exit to leave the
+shell and the test program will regain control.
+
+A real program provides more impressive results. We developed ExecSwap
+for use in our Turbo Analyst product, which offers an integrated
+environment where the programmer can edit source files, then Exec the
+compiler, debugger, or any of many other programming utilities. Without
+benefit of ExecSwap, the environment keeps about 250K of memory during
+the Exec. With ExecSwap, the overhead is only about 4K. That 246K makes
+a huge difference!
+
+How It's Done
+-------------
+ExecSwap's Pascal source file, EXECSWAP.PAS, is given in Listing 2. It's
+little more than a shell for the assembly language routines in
+EXECSWAP.ASM, Listing 3.
+
+Looking at InitExecSwap in Listing 2, you'll see that it checks first
+for EMS memory (any version of EMS will do). If that is available, it is
+used in preference to disk storage. If not, InitExecSwap goes on to
+assure that there's enough space on the specified drive to hold the swap
+area. In our production version of ExecSwap (trimmed here for the sake
+of brevity), we check that the drive doesn't hold removable media.
+InitExecSwap also stores several items in global variables where they're
+easily accessible by the assembly language routines, and installs an
+exit handler to clean up after itself in case the program halts
+unexpectedly.
+
+The tricky stuff is in EXECSWAP.ASM. The file starts with the standard
+boilerplate needed for linking to Turbo Pascal. We declare a number of
+temporary variables in the code segment; these are essential because the
+entire data segment is gone during critical portions of ExecWithSwap.
+One of these variables is a temporary stack. It's a small one, only 128
+bytes, but it is required since the normal Turbo Pascal stack is also
+swapped out. Macro definitions follow; we've used more than our usual
+number of macros to keep the listing to a reasonable length.
+
+ExecWithSwap starts by copying a number of variables into the code
+segment. Then it checks to see whether swapping will go to EMS or disk.
+If neither has been activated, ExecWithSwap exits immediately, returning
+error code 1. Otherwise, ExecWithSwap processes one of four similar
+loops: one each to swap to or from disk or EMS storage. Let's trace the
+"swap to EMS" loop in detail, at label WriteE. The sequence for swapping
+to disk is so similar that we won't need to describe it here.
+
+We first map EMS memory, making the first 16K page of the EMS swap area
+accessible through the page window at FrameSeg:0. (Note that ExecSwap
+doesn't save the EMS context; if your application uses EMS for other
+storage, be sure to remap EMS after returning from ExecWithSwap.) The
+macro SetSwapCount then computes how many bytes to copy into the first
+page, returning a full 16K bytes unless it's also the last page. The
+first location to save is at label FirstToSave, which immediately
+follows the ExecWithSwap routine. The MoveFast macro copies the first
+swap block into the EMS window. BX is then incremented to select the
+next logical EMS page, and the DS register is adjusted to point to the
+next swap block, 16K bytes higher in memory. The loop continues until
+all the bytes have been copied to EMS.
+
+Next we must modify the DOS memory allocation, so that the space just
+swapped out is available to the child process. First we save the current
+allocated size so we can restore it later. Then we switch to the small
+temporary stack which is safely nestled in the code segment, and finally
+call the DOS SetBlock function to shrink our memory to just beyond the
+end of the ExecWithSwap routine.
+
+The actual DOS Exec call follows. The implementation here is similar to
+the one in Borland's Dos unit. It validates and formats the program path
+and command line, parses FCB's (file control blocks) from the command
+line in case the child expects them, and calls the DOS Exec function.
+The error code returned by Exec is stored until the reverse swap is
+complete.
+
+The reverse swap is just that: it reallocates memory from DOS and copies
+the parent program back into place. There is one critical difference
+from the first swap, however. Errors that occur during the reverse swap
+are fatal. Since the program to return to no longer exists, our only
+recourse is to halt. The most likely reason for such an error is the
+inability to reallocate the initial memory block. This occurs whenever
+the Exec call (or the user) has installed a memory resident program
+while in the shell. Be sure to warn your users not to do this! ExecSwap
+could write an error message before halting; to save space here, we've
+just set the ErrorLevel, which can be checked within a batch file:
+
+  0FFh     can't reallocate memory
+  0FEh     disk error
+  0FDh     EMS error
+
+ExecWithSwap is done after it switches back to the original stack,
+restores the DS register, and returns the status code.
+
+The remainder of EXECSWAP.ASM is a collection of small utility routines,
+some of which may find general use in your library.
+
+In Summary
+----------
+ExecSwap seems quite reliable. It doesn't depend on any newly discovered
+undocumented features of DOS, and has been tested by thousands of our
+products' users.
+
+There are a few additional features it might have. Our production
+version writes status messages while swapping, so nervous users don't
+think their hard disks are being formatted. It might also support direct
+swapping to extended memory -- we haven't done so because experience
+indicates that using extended memory in a DOS application is a
+compatibility nightmare, and RAM disks seem quite adequate for swapping.
+If the remainder of ExecSwap were converted to assembly language, Turbo
+Pascal's link order conventions (within a unit) could be circumvented
+and another 500 bytes or so of Exec overhead would be saved. With a few
+more DOS memory management calls, it would be possible for the parent
+and child processes to share a common data area. Finally, an extension
+of the ExecSwap concept allows TSR programs to leave just a core of
+interrupt handlers in memory, and swap the application code in when they
+pop up (SideKick Plus apparently does this).
+
+The ExecSwap unit has become a very useful item in our bag of tricks.
+With an ExecSwap-based DOS shell in the programming editor we use, we
+can achieve the kind of multitasking we need ("interruption-based"
+multitasking). ExecSwap should make it easier for you to squeeze more
+functionality into that 640K box as well.
+
+Acknowledgement
+---------------
+Special thanks to Chris Franzen of West Germany, who added disk swapping
+capability to our original unit, which supported only EMS.
+
+This DOC file is an unedited version of an article that appeared in the
+April 1988 issue of Dr. Dobbs Journal.
+
+About the Author
+----------------
+Kim Kokkonen is the president of TurboPower Software, and the author of
+many public domain Turbo Pascal tools. He can be reached at P.O. Box
+66747, Scotts Valley, CA 95066.
+
+Listing 1: TEST.PAS
+Listing 2: EXECSWAP.PAS
+Listing 3: EXECSWAP.ASM
